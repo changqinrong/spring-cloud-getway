@@ -1,17 +1,18 @@
 server:
   port: 9000
-Spring:
+spring:
   cloud:
     gateway:
       routes:
-       -id: first_route
-        uri: http://baidu.com
-        predicates:
-          -Path: /first/**
-      -id: second_route
-        uri: http://baidu.com
-        predicates:
-          -Path: /second/**
-
-
-
+        - id: first_route
+          uri: https://www.sina.com.cn/
+          filters:
+            - AddRequestHeader=X-Request-Foo, Bar
+          predicates:
+            - Path=/first/**
+        - id: second_route
+          uri: https://www.jd.com/
+          filters:
+            - AddRequestHeader=X-Request-Foo, Bar
+          predicates:
+            - Path=/second/**
