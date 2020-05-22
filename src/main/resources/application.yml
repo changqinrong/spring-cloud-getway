@@ -3,16 +3,23 @@ server:
 spring:
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
       routes:
         - id: first_route
-          uri: https://www.sina.com.cn/
+          uri: lb://service-provider
           filters:
             - AddRequestHeader=X-Request-Foo, Bar
           predicates:
-            - Path=/first/**
+            - Path=/echo/**
         - id: second_route
           uri: https://www.jd.com/
           filters:
             - AddRequestHeader=X-Request-Foo, Bar
           predicates:
             - Path=/second/**
+    #service-consumer
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848 #注册中心地址
